@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Apos.Shapes;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,10 +9,17 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
+    private ShapeBatch _shapeBatch;
+
+    private float radius;
+    private Vector2 circlePosition;
 
     public Game1()
     {
         _graphics = new GraphicsDeviceManager(this);
+
+        _graphics.GraphicsProfile = GraphicsProfile.HiDef;
+
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
     }
@@ -20,6 +28,9 @@ public class Game1 : Game
     {
         // TODO: Add your initialization logic here
 
+        radius = 0;
+        circlePosition = Vector2.Zero;
+
         base.Initialize();
     }
 
@@ -27,13 +38,18 @@ public class Game1 : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        // TODO: use this.Content to load your game content here
-    }
+		_shapeBatch = new ShapeBatch(GraphicsDevice, Content);
+
+		// TODO: use this.Content to load your game content here
+	}
 
     protected override void Update(GameTime gameTime)
     {
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+
+        circlePosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
+        radius += .1f;
 
         // TODO: Add your update logic here
 
@@ -44,6 +60,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
+        _shapeBatch.Begin();
+        _shapeBatch.DrawCircle(circlePosition, radius, Color.Transparent, Color.White, 1f);
+        _shapeBatch.End();
         // TODO: Add your drawing code here
 
         base.Draw(gameTime);
