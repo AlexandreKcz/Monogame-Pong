@@ -11,8 +11,9 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private ShapeBatch _shapeBatch;
 
-    private float radius;
-    private Vector2 circlePosition;
+    private float paddleSpeed = 200f;
+    private Rectangle paddle;
+    private Vector2 paddlePosition;
 
     public Game1()
     {
@@ -27,11 +28,10 @@ public class Game1 : Game
     protected override void Initialize()
     {
         // TODO: Add your initialization logic here
+        paddle = new Rectangle(20, GraphicsDevice.Viewport.Height / 2, 20, 200);
+        paddlePosition = new Vector2(paddle.X, paddle.Y);
 
-        radius = 0;
-        circlePosition = Vector2.Zero;
-
-        base.Initialize();
+		base.Initialize();
     }
 
     protected override void LoadContent()
@@ -45,15 +45,25 @@ public class Game1 : Game
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+		double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
+
+		if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        circlePosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-        radius += .1f;
+        if (Keyboard.GetState().IsKeyDown(Keys.Up))
+        {
+			paddlePosition.Y -= paddleSpeed * (float)deltaTime;
+		}
+        if (Keyboard.GetState().IsKeyDown(Keys.Down))
+        {
+			paddlePosition.Y += paddleSpeed * (float)deltaTime;
+		}
 
-        // TODO: Add your update logic here
+        paddle.X = (int)paddlePosition.X; paddle.Y = (int) paddlePosition.Y;
 
-        base.Update(gameTime);
+		// TODO: Add your update logic here
+
+		base.Update(gameTime);
     }
 
     protected override void Draw(GameTime gameTime)
@@ -61,7 +71,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.Black);
 
         _shapeBatch.Begin();
-        _shapeBatch.DrawCircle(circlePosition, radius, Color.Transparent, Color.White, 1f);
+        _shapeBatch.DrawRectangle(new Vector2(paddle.X, paddle.Y), new Vector2(paddle.Width, paddle.Height), Color.White, Color.Transparent, 1);
         _shapeBatch.End();
         // TODO: Add your drawing code here
 
