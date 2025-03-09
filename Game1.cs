@@ -58,7 +58,7 @@ public class Game1 : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Color.Black);
 
         _shapeBatch.Begin();
         _shapeBatch.DrawCircle(circlePosition, radius, Color.Transparent, Color.White, 1f);
