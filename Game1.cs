@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace Mono_Pong;
 
@@ -12,6 +13,8 @@ public class Game1 : Game
     private ShapeBatch _shapeBatch;
 
     private Paddle _playerPaddle;
+
+    private Ball _ball;
 
     public Game1()
     {
@@ -27,6 +30,8 @@ public class Game1 : Game
     {
 
         _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 2, 20, 200), GraphicsDevice, 200f);
+
+        _ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 400f, GraphicsDevice);
 
 		base.Initialize();
     }
@@ -54,6 +59,8 @@ public class Game1 : Game
 			_playerPaddle.MovePaddle(+1, deltaTime);
 		}
 
+        _ball.UpdateBall(deltaTime);
+
 		base.Update(gameTime);
     }
 
@@ -65,7 +72,10 @@ public class Game1 : Game
 
         _playerPaddle.DrawPaddle(_shapeBatch);
 
-        _shapeBatch.End();
+		_ball.DrawBall(_shapeBatch);
+
+
+		_shapeBatch.End();
 
         base.Draw(gameTime);
     }
