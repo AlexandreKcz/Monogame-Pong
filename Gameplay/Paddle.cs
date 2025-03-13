@@ -34,6 +34,7 @@ class Paddle
 
 	private float _speed = 200f;
 
+	public Rectangle PaddleRect {  get { return _paddleRect; } }
 	private Rectangle _paddleRect;
 
 	private Vector2 _screenDimension;

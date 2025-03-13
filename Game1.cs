@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Diagnostics;
 
 namespace Mono_Pong;
@@ -29,9 +30,14 @@ public class Game1 : Game
     protected override void Initialize()
     {
 
-        _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 2, 20, 200), GraphicsDevice, 200f);
+        _graphics.SynchronizeWithVerticalRetrace = true;
+        IsFixedTimeStep = true;
+        TargetElapsedTime = TimeSpan.FromSeconds(1d / 144d);
+        _graphics.ApplyChanges();
 
-        _ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 400f, GraphicsDevice);
+        _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 4, 20, 200), GraphicsDevice, 400f);
+
+        _ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 800f, GraphicsDevice);
 
 		base.Initialize();
     }
@@ -60,6 +66,8 @@ public class Game1 : Game
 		}
 
         _ball.UpdateBall(deltaTime);
+
+        _ball.CheckCollisionWithPaddle(_playerPaddle, -1);
 
 		base.Update(gameTime);
     }

@@ -85,6 +85,16 @@ class Ball
 		*/
 	}
 
+	public void CheckCollisionWithPaddle(Paddle paddle, int dir)
+	{
+		if (paddle.PaddleRect.Intersects(_ballRect))
+		{
+			_direction.X *= -1;
+			_position.X += paddle.PaddleRect.Right - _ballRect.Left;
+			updateRect();
+		}
+	}
+
 	public void DrawBall(ShapeBatch batch)
 	{
 		batch.DrawRectangle(new Vector2(_ballRect.X, _ballRect.Y), new Vector2(_ballRect.Width, _ballRect.Height), Color.White, Color.Transparent, 1);
