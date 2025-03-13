@@ -26,7 +26,7 @@ public class Game1 : Game
     protected override void Initialize()
     {
 
-        _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 2, 20, 200), 200f);
+        _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 2, 20, 200), GraphicsDevice, 200f);
 
 		base.Initialize();
     }

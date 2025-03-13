@@ -1,5 +1,6 @@
 ﻿using Apos.Shapes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,17 +36,21 @@ class Paddle
 
 	private Rectangle _paddleRect;
 
-	public Paddle(Rectangle rect, float speed = 200f)
+	private Vector2 _screenDimension;
+
+	public Paddle(Rectangle rect, GraphicsDevice graphic, float speed = 200f)
 	{
 		_speed = speed;
 		_paddleRect = rect;
 		_paddlePosition = new Vector2(rect.X, rect.Y);
+
+		_screenDimension = new Vector2(graphic.Viewport.Width, graphic.Viewport.Height);
 	}
 
 	public void MovePaddle(int direction, double delta)  //-1 is up, +1 is down
 	{
 		_paddlePosition.Y += direction * (float) delta * _speed;
-		updateRect();
+		clampPaddleToScreen();
 	}
 
 	public void DrawPaddle(ShapeBatch batch)
@@ -56,5 +61,12 @@ class Paddle
 	private void updateRect()
 	{
 		_paddleRect.X = (int)_paddlePosition.X; _paddleRect.Y = (int)_paddlePosition.Y;
+	}
+
+	private void clampPaddleToScreen()
+	{
+		_paddlePosition.X = Math.Clamp(_paddlePosition.X, 0, (_screenDimension.X - _paddleRect.Width));
+		_paddlePosition.Y = Math.Clamp(_paddlePosition.Y, 0, (_screenDimension.Y - _paddleRect.Height));
+		updateRect();
 	}
 }
