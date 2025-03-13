@@ -11,9 +11,7 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private ShapeBatch _shapeBatch;
 
-    private float paddleSpeed = 200f;
-    private Rectangle paddle;
-    private Vector2 paddlePosition;
+    private Paddle _playerPaddle;
 
     public Game1()
     {
@@ -27,9 +25,8 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-        paddle = new Rectangle(20, GraphicsDevice.Viewport.Height / 2, 20, 200);
-        paddlePosition = new Vector2(paddle.X, paddle.Y);
+
+        _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 2, 20, 200), 200f);
 
 		base.Initialize();
     }
@@ -39,8 +36,6 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
 		_shapeBatch = new ShapeBatch(GraphicsDevice, Content);
-
-		// TODO: use this.Content to load your game content here
 	}
 
     protected override void Update(GameTime gameTime)
@@ -52,16 +47,12 @@ public class Game1 : Game
 
         if (Keyboard.GetState().IsKeyDown(Keys.Up))
         {
-			paddlePosition.Y -= paddleSpeed * (float)deltaTime;
+            _playerPaddle.MovePaddle(-1, deltaTime);
 		}
         if (Keyboard.GetState().IsKeyDown(Keys.Down))
         {
-			paddlePosition.Y += paddleSpeed * (float)deltaTime;
+			_playerPaddle.MovePaddle(+1, deltaTime);
 		}
-
-        paddle.X = (int)paddlePosition.X; paddle.Y = (int) paddlePosition.Y;
-
-		// TODO: Add your update logic here
 
 		base.Update(gameTime);
     }
@@ -71,9 +62,10 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.Black);
 
         _shapeBatch.Begin();
-        _shapeBatch.DrawRectangle(new Vector2(paddle.X, paddle.Y), new Vector2(paddle.Width, paddle.Height), Color.White, Color.Transparent, 1);
+
+        _playerPaddle.DrawPaddle(_shapeBatch);
+
         _shapeBatch.End();
-        // TODO: Add your drawing code here
 
         base.Draw(gameTime);
     }
