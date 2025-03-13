@@ -57,12 +57,16 @@ class Ball
 
 	public void CheckForCollision(double delta)
 	{
+		/*
 		if (_position.X + _radius > _screenDimension.X ||
 			_position.X < 0 ||
 			_position.Y + _radius > _screenDimension.Y ||
 			_position.Y < 0) {
 			_direction = _direction.RotateDegrees(90);
-		}
+		}*/
+
+		if (_position.X + _radius > _screenDimension.X || _position.X < 0) _direction.X *= -1;
+		if (_position.Y + _radius > _screenDimension.Y || _position.Y < 0) _direction.Y *= -1;
 
 		/*
 		bool inZone = _ballRect.Intersects(_screenBounds);
