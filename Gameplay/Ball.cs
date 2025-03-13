@@ -90,7 +90,7 @@ class Ball
 		if (paddle.PaddleRect.Intersects(_ballRect))
 		{
 			_direction.X *= -1;
-			_position.X += paddle.PaddleRect.Right - _ballRect.Left;
+			_position.X += dir < 0 ? paddle.PaddleRect.Right - _ballRect.Left : paddle.PaddleRect.Left - _ballRect.Right;
 			updateRect();
 		}
 	}
