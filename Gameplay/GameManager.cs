@@ -63,6 +63,7 @@ class GameManager
 		int randomVelY = new Random().Next(-1, 2);
 		while (randomVelY == 0) randomVelY = new Random().Next(-1, 2);
 		vel.Y = randomVelY;
+		vel.Normalize();
 
 		ball.Direction = vel;
 	}

@@ -50,7 +50,7 @@ public class Game1 : Game
 
 		_aiPaddle = new AiPaddle(new Rectangle(GraphicsDevice.Viewport.Width - 40, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 150f);
 
-		_ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 800f, GraphicsDevice);
+		_ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 1200f, GraphicsDevice);
 
         _demarcationLine = new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 5, GraphicsDevice.Viewport.Height);
 
