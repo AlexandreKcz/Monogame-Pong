@@ -15,6 +15,8 @@ class AiPaddle : Paddle
 
 	public void UpdateAIBehaviour(Vector2 ballPosition, int ballRadius, double deltaTime)
 	{
+		if (GameManager.Instance.Timer) return;
+
 		//Debug.WriteLine(string.Format("ballPos : {0}, paddlePos : {1}, ballRadius : {2}, paddleRectHeight {3}", ballPosition, _paddlePosition, ballRadius, _paddleRect.Height));
 
 		//Debug.WriteLine(ballPosition.Y + (ballRadius / 2) < _paddlePosition.Y || ballPosition.Y + (ballRadius / 2) > (_paddlePosition.Y + _paddleRect.Height) ? "in paddle" : "outside paddle");

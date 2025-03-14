@@ -37,6 +37,7 @@ class GameManager
 	{
 		if (player == PlayersEnum.Player1) _score.p1 += scoreValue;
 		else if (player == PlayersEnum.Player2) _score.p2 += scoreValue;
+		Debug.WriteLine(string.Format("Score : p1 {0} | p2 {1}", _score.p1, _score.p2));
 	}
 
 	public void StartTimer()
@@ -51,8 +52,8 @@ class GameManager
 
 		Vector2 vel = Vector2.Zero;
 
-		if (_score.p1 > _score.p2) vel.X = -1;
-		else if (_score.p1 < _score.p2) vel.X = 1;
+		if (_score.p1 > _score.p2) vel.X = 1;
+		else if (_score.p1 < _score.p2) vel.X = -1;
 		else
 		{
 			int randomVelX = new Random().Next(-1, 2);
@@ -84,6 +85,6 @@ class GameManager
 			_timer = false;
 		}
 
-		Debug.WriteLine(string.Format("Current timer : {0}", _currentWaitTime));
+		//Debug.WriteLine(string.Format("Current timer : {0}", _currentWaitTime));
 	}
 }
