@@ -18,7 +18,7 @@ class Paddle
 		}
 	}
 
-	private Vector2 _paddlePosition;
+	protected Vector2 _paddlePosition;
 
 	public float Speed
 	{
@@ -32,12 +32,12 @@ class Paddle
 		}
 	}
 
-	private float _speed = 200f;
+	protected float _speed = 200f;
 
 	public Rectangle PaddleRect {  get { return _paddleRect; } }
-	private Rectangle _paddleRect;
+	protected Rectangle _paddleRect;
 
-	private Vector2 _screenDimension;
+	protected Vector2 _screenDimension;
 
 	public Paddle(Rectangle rect, GraphicsDevice graphic, float speed = 200f)
 	{

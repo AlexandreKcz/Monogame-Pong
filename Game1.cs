@@ -15,7 +15,7 @@ public class Game1 : Game
 
     private Paddle _playerPaddle;
 
-    private Paddle _aiPaddle;
+    private AiPaddle _aiPaddle;
 
     private Rectangle _demarcationLine;
 
@@ -41,7 +41,7 @@ public class Game1 : Game
 
         _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 600f);
 
-		_aiPaddle = new Paddle(new Rectangle(GraphicsDevice.Viewport.Width - 40, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 600f);
+		_aiPaddle = new AiPaddle(new Rectangle(GraphicsDevice.Viewport.Width - 40, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 600f);
 
 		_ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 800f, GraphicsDevice);
 
@@ -74,6 +74,8 @@ public class Game1 : Game
 		}
 
         _ball.UpdateBall(deltaTime);
+
+        _aiPaddle.UpdateAIBehaviour(_ball.Position, deltaTime);
 
         _ball.CheckCollisionWithPaddle(_playerPaddle, -1);
         _ball.CheckCollisionWithPaddle(_aiPaddle, 1);

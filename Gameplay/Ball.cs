@@ -14,6 +14,7 @@ class Ball
 	private Rectangle _ballRect;
 	private int _radius;
 	private Vector2 _direction;
+	public Vector2 Position { get { return _position; } }
 	private Vector2 _position;
 	private float _speed = 2000f;
 
