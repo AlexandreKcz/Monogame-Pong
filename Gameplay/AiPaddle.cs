@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,15 @@ class AiPaddle : Paddle
 	{
 	}
 
-	public void UpdateAIBehaviour(Vector2 ballPosition, double deltaTime)
+	public void UpdateAIBehaviour(Vector2 ballPosition, int ballRadius, double deltaTime)
 	{
-		if (ballPosition.Y > _paddlePosition.Y) MovePaddle(-1, deltaTime);
-		else if(ballPosition.Y < (_paddlePosition.Y + _paddleRect.Height)) MovePaddle(+1, deltaTime);
+		//Debug.WriteLine(string.Format("ballPos : {0}, paddlePos : {1}, ballRadius : {2}, paddleRectHeight {3}", ballPosition, _paddlePosition, ballRadius, _paddleRect.Height));
+
+		//Debug.WriteLine(ballPosition.Y + (ballRadius / 2) < _paddlePosition.Y || ballPosition.Y + (ballRadius / 2) > (_paddlePosition.Y + _paddleRect.Height) ? "in paddle" : "outside paddle");
+
+		//int rndmMove = new Random().Next(0, 2);
+
+		if (ballPosition.Y + (ballRadius / 2) < _paddlePosition.Y) MovePaddle(-1, deltaTime);
+		else if(ballPosition.Y + (ballRadius / 2) > (_paddlePosition.Y + _paddleRect.Height)) MovePaddle(+1, deltaTime);
 	}
 }

@@ -13,6 +13,11 @@ public class Game1 : Game
     private SpriteBatch _spriteBatch;
     private ShapeBatch _shapeBatch;
 
+    /* Manager */
+
+    private GameManager _gameManager;
+
+    /* Game Objects */
     private Paddle _playerPaddle;
 
     private AiPaddle _aiPaddle;
@@ -34,6 +39,8 @@ public class Game1 : Game
     protected override void Initialize()
     {
 
+        _gameManager = new GameManager(GraphicsDevice);
+
         _graphics.SynchronizeWithVerticalRetrace = true;
         IsFixedTimeStep = true;
         TargetElapsedTime = TimeSpan.FromSeconds(1d / 144d);
@@ -41,7 +48,7 @@ public class Game1 : Game
 
         _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 600f);
 
-		_aiPaddle = new AiPaddle(new Rectangle(GraphicsDevice.Viewport.Width - 40, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 600f);
+		_aiPaddle = new AiPaddle(new Rectangle(GraphicsDevice.Viewport.Width - 40, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 150f);
 
 		_ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 800f, GraphicsDevice);
 
@@ -61,6 +68,8 @@ public class Game1 : Game
     {
 		double deltaTime = gameTime.ElapsedGameTime.TotalSeconds;
 
+        _gameManager.UpdateTimer(deltaTime, _ball);
+
 		if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
@@ -75,7 +84,7 @@ public class Game1 : Game
 
         _ball.UpdateBall(deltaTime);
 
-        _aiPaddle.UpdateAIBehaviour(_ball.Position, deltaTime);
+        _aiPaddle.UpdateAIBehaviour(_ball.Position, _ball.Radius, deltaTime);
 
         _ball.CheckCollisionWithPaddle(_playerPaddle, -1);
         _ball.CheckCollisionWithPaddle(_aiPaddle, 1);
