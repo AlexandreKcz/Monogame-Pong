@@ -1,5 +1,6 @@
 ﻿using Apos.Shapes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -62,6 +63,10 @@ public class Game1 : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
 		_shapeBatch = new ShapeBatch(GraphicsDevice, Content);
+
+        _gameManager.GoalSFX = Content.Load<SoundEffect>("Audio/goal");
+        _gameManager.SetSFX = Content.Load<SoundEffect>("Audio/set");
+        _ball.BounceSFX = Content.Load<SoundEffect>("Audio/bounce");
 	}
 
     protected override void Update(GameTime gameTime)

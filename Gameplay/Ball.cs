@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Apos.Shapes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 
 class Ball
@@ -30,6 +31,8 @@ class Ball
 
 	private float _timeToWait = 30f;
 	private float _currentTimeToWait = 30f;
+
+	public SoundEffect BounceSFX;
 
 	public Ball(Vector2 position, int radius, float speed, GraphicsDevice graphic)
 	{
@@ -85,7 +88,10 @@ class Ball
 			//GameManager.Instance.ResetGame(this);
 		}
 
-		if (_position.Y + _radius > _screenDimension.Y || _position.Y < 0) _direction.Y *= -1;
+		if (_position.Y + _radius > _screenDimension.Y || _position.Y < 0) { 
+			_direction.Y *= -1;
+			BounceSFX.Play();
+		}
 
 		/*
 		bool inZone = _ballRect.Intersects(_screenBounds);
@@ -111,6 +117,7 @@ class Ball
 			_direction.X *= -1;
 			_position.X += dir < 0 ? paddle.PaddleRect.Right - _ballRect.Left : paddle.PaddleRect.Left - _ballRect.Right;
 			updateRect();
+			BounceSFX.Play();
 		}
 	}
 

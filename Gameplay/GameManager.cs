@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;
+using Microsoft.Xna.Framework.Audio;
 
 class GameManager
 {
@@ -19,6 +20,9 @@ class GameManager
 	private float _currentWaitTime = 0;
 	public bool Timer { get {  return _timer; } }
 	private bool _timer = false;
+
+	public SoundEffect GoalSFX;
+	public SoundEffect SetSFX;
 
 	private Vector2 _screenDimension;
 
@@ -38,6 +42,8 @@ class GameManager
 		if (player == PlayersEnum.Player1) _score.p1 += scoreValue;
 		else if (player == PlayersEnum.Player2) _score.p2 += scoreValue;
 		Debug.WriteLine(string.Format("Score : p1 {0} | p2 {1}", _score.p1, _score.p2));
+
+		GoalSFX.Play();
 	}
 
 	public void StartTimer()
@@ -67,6 +73,8 @@ class GameManager
 		vel.Normalize();
 
 		ball.Direction = vel;
+
+		SetSFX.Play();
 	}
 
 	public void UpdateTimer(double deltaTime, Ball ball)
