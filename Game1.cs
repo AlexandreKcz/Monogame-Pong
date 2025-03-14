@@ -17,6 +17,8 @@ public class Game1 : Game
 
     private Paddle _aiPaddle;
 
+    private Rectangle _demarcationLine;
+
     private Ball _ball;
 
     public Game1()
@@ -37,11 +39,13 @@ public class Game1 : Game
         TargetElapsedTime = TimeSpan.FromSeconds(1d / 144d);
         _graphics.ApplyChanges();
 
-        _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 4, 20, 200), GraphicsDevice, 400f);
+        _playerPaddle = new Paddle(new Rectangle(20, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 600f);
 
-		_aiPaddle = new Paddle(new Rectangle(GraphicsDevice.Viewport.Width - 40, GraphicsDevice.Viewport.Height / 4, 20, 200), GraphicsDevice, 400f);
+		_aiPaddle = new Paddle(new Rectangle(GraphicsDevice.Viewport.Width - 40, GraphicsDevice.Viewport.Height / 4, 20, 150), GraphicsDevice, 600f);
 
 		_ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 800f, GraphicsDevice);
+
+        _demarcationLine = new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 5, GraphicsDevice.Viewport.Height);
 
 		base.Initialize();
     }
@@ -89,6 +93,7 @@ public class Game1 : Game
 
 		_ball.DrawBall(_shapeBatch);
 
+        _shapeBatch.DrawRectangle(new Vector2(_demarcationLine.X, _demarcationLine.Y), new Vector2(_demarcationLine.Width, _demarcationLine.Height), Color.White, Color.Transparent, 1);
 
 		_shapeBatch.End();
 
