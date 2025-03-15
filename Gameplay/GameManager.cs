@@ -24,6 +24,8 @@ class GameManager
 	public SoundEffect GoalSFX;
 	public SoundEffect SetSFX;
 
+	public AiPaddle AiPaddle;
+
 	private Vector2 _screenDimension;
 
 	public GameManager(GraphicsDevice graphics)
@@ -75,6 +77,8 @@ class GameManager
 		ball.Direction = vel;
 
 		SetSFX.Play();
+
+		AiPaddle.BallBounceCallback();
 	}
 
 	public Vector2 GetRandomVel()

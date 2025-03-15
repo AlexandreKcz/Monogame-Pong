@@ -70,4 +70,6 @@ class Paddle
 		_paddlePosition.Y = Math.Clamp(_paddlePosition.Y, 0, (_screenDimension.Y - _paddleRect.Height));
 		updateRect();
 	}
+
+	public virtual void BallBounceCallback() { }
 }

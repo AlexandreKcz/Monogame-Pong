@@ -67,6 +67,8 @@ public class Game1 : Game
         _gameManager.GoalSFX = Content.Load<SoundEffect>("Audio/goal");
         _gameManager.SetSFX = Content.Load<SoundEffect>("Audio/set");
         _ball.BounceSFX = Content.Load<SoundEffect>("Audio/bounce");
+
+        _gameManager.AiPaddle = _aiPaddle;
 	}
 
     protected override void Update(GameTime gameTime)

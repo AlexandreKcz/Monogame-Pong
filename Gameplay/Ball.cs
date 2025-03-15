@@ -117,6 +117,8 @@ class Ball
 	{
 		if (paddle.PaddleRect.Intersects(_ballRect))
 		{
+			if (dir < 0) GameManager.Instance.AiPaddle.BallBounceCallback();
+			else if (dir > 0) paddle.BallBounceCallback();
 			_direction.X *= -1;
 			_position.X += dir < 0 ? paddle.PaddleRect.Right - _ballRect.Left : paddle.PaddleRect.Left - _ballRect.Right;
 			updateRect();

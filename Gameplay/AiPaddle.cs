@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 
 class AiPaddle : Paddle
 {
+	private float _initialSpeed = 0f;
+
 	public AiPaddle(Rectangle rect, GraphicsDevice graphic, float speed = 200) : base(rect, graphic, speed)
 	{
+		_initialSpeed = speed;
 	}
 
 	public void UpdateAIBehaviour(Vector2 ballPosition, int ballRadius, double deltaTime)
@@ -25,5 +28,12 @@ class AiPaddle : Paddle
 
 		if (ballPosition.Y + (ballRadius / 2) < _paddlePosition.Y) MovePaddle(-1, deltaTime);
 		else if(ballPosition.Y + (ballRadius / 2) > (_paddlePosition.Y + _paddleRect.Height)) MovePaddle(+1, deltaTime);
+	}
+
+	public override void BallBounceCallback()
+	{
+		//base.BallBounceCallback();
+		_speed = _initialSpeed * (new Random().Next(4, 14) * .1f);
+		Debug.WriteLine(_speed);
 	}
 }
