@@ -13,6 +13,7 @@ public class Game1 : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private ShapeBatch _shapeBatch;
+    private SamplerState _sampler;
 
     /* Manager */
 
@@ -26,6 +27,8 @@ public class Game1 : Game
     private Rectangle _demarcationLine;
 
     private Ball _ball;
+
+    private Score _score;
 
     public Game1()
     {
@@ -53,6 +56,8 @@ public class Game1 : Game
 
 		_ball = new Ball(new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 20, 1400f, GraphicsDevice);
 
+        _score = new Score(GraphicsDevice);
+
         _demarcationLine = new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 5, GraphicsDevice.Viewport.Height);
 
 		base.Initialize();
@@ -64,9 +69,14 @@ public class Game1 : Game
 
 		_shapeBatch = new ShapeBatch(GraphicsDevice, Content);
 
-        _gameManager.GoalSFX = Content.Load<SoundEffect>("Audio/goal");
+        _sampler = SamplerState.PointClamp;
+
+
+		_gameManager.GoalSFX = Content.Load<SoundEffect>("Audio/goal");
         _gameManager.SetSFX = Content.Load<SoundEffect>("Audio/set");
         _ball.BounceSFX = Content.Load<SoundEffect>("Audio/bounce");
+
+        _score.Font = Content.Load<SpriteFont>("Font/ScoreFont");
 
         _gameManager.AiPaddle = _aiPaddle;
 	}
@@ -114,6 +124,12 @@ public class Game1 : Game
         _shapeBatch.DrawRectangle(new Vector2(_demarcationLine.X, _demarcationLine.Y), new Vector2(_demarcationLine.Width, _demarcationLine.Height), Color.White, Color.Transparent, 1);
 
 		_shapeBatch.End();
+
+        _spriteBatch.Begin(samplerState:_sampler);
+
+        _score.DrawScore(_spriteBatch);
+
+        _spriteBatch.End();
 
         base.Draw(gameTime);
     }

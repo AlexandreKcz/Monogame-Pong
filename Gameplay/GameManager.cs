@@ -13,7 +13,7 @@ class GameManager
 	public static GameManager Instance { get { return _instance; } }
 	private static GameManager _instance;
 
-	public (int p1, int p2) Score { get {  return _score; } }
+	public (int p1, int p2) LocalScore { get {  return _score; } }
 	private (int p1, int p2) _score;
 
 	private float _waitTime;
@@ -44,6 +44,8 @@ class GameManager
 		if (player == PlayersEnum.Player1) _score.p1 += scoreValue;
 		else if (player == PlayersEnum.Player2) _score.p2 += scoreValue;
 		Debug.WriteLine(string.Format("Score : p1 {0} | p2 {1}", _score.p1, _score.p2));
+
+		Score.Instance.ScoreTuple = _score;
 
 		GoalSFX.Play();
 	}

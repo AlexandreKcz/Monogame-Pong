@@ -31,3 +31,10 @@
 /processorParam:Quality=Best
 /build:Audio/set.mp3
 
+#begin Font/ScoreFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Font/ScoreFont.spritefont
+
