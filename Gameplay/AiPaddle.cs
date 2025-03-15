@@ -33,7 +33,7 @@ class AiPaddle : Paddle
 	public override void BallBounceCallback()
 	{
 		//base.BallBounceCallback();
-		_speed = _initialSpeed * (new Random().Next(4, 14) * .1f);
-		Debug.WriteLine(_speed);
+		_speed = _initialSpeed * (new Random().Next(8, 18) * .1f);
+		//Debug.WriteLine(_speed);
 	}
 }

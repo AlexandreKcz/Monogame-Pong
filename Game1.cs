@@ -93,8 +93,8 @@ public class Game1 : Game
 
         _aiPaddle.UpdateAIBehaviour(_ball.Position, _ball.Radius, deltaTime);
 
-        _ball.CheckCollisionWithPaddle(_playerPaddle, -1);
-        _ball.CheckCollisionWithPaddle(_aiPaddle, 1);
+        _ball.CheckCollisionWithPaddle(_playerPaddle, -1, deltaTime);
+        _ball.CheckCollisionWithPaddle(_aiPaddle, 1, deltaTime);
 
 		base.Update(gameTime);
     }

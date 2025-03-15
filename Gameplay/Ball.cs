@@ -93,6 +93,7 @@ class Ball
 
 		if (_position.Y + _radius > _screenDimension.Y || _position.Y < 0) { 
 			_direction.Y *= -1;
+			updateRect();
 			BounceSFX.Play();
 		}
 
@@ -113,16 +114,42 @@ class Ball
 		*/
 	}
 
-	public void CheckCollisionWithPaddle(Paddle paddle, int dir)
+	public void CheckCollisionWithPaddle(Paddle paddle, int dir, double delta) //dir < 0 joueur gauche (joueur), dir > 0 joueur droit (ai)
 	{
+		//Debug.WriteLine(string.Format("Ball top : {0} Ball Bottom : {1} | Paddle Top : {2} Paddle Bottom : {3}", _ballRect.Top, _ballRect.Bottom, paddle.PaddleRect.Top,paddle.PaddleRect.Bottom));
+
 		if (paddle.PaddleRect.Intersects(_ballRect))
 		{
-			if (dir < 0) GameManager.Instance.AiPaddle.BallBounceCallback();
-			else if (dir > 0) paddle.BallBounceCallback();
-			_direction.X *= -1;
-			_position.X += dir < 0 ? paddle.PaddleRect.Right - _ballRect.Left : paddle.PaddleRect.Left - _ballRect.Right;
-			updateRect();
-			BounceSFX.Play();
+			//bool isSideColliding = dir < 0 ? _ballRect.Right < (paddle.PaddleRect.Left + paddle.PaddleRect.Width / 2) : _ballRect.Left > (paddle.PaddleRect.Right - paddle.PaddleRect.Width / 2);
+
+			bool topCollision = _ballRect.Bottom <= (paddle.PaddleRect.Top + 5);
+			bool bottomCollison = _ballRect.Top >= (paddle.PaddleRect.Bottom - 5);
+
+			if (topCollision || bottomCollison) //collision trop à gauche
+			{
+				/* Side Bounce */
+				Debug.WriteLine(topCollision ? "top col" : "bottom col");
+				_direction.Y   = topCollision ? -1 : 1;
+				_position.Y += topCollision ? _ballRect.Bottom - paddle.PaddleRect.Top  - 5 - paddle.Speed * (float) delta: _ballRect.Top - paddle.PaddleRect.Bottom + 5 + paddle.Speed * (float) delta;
+				updateRect();
+				BounceSFX.Play();
+			} else
+			{
+
+				bool behindPaddle = dir < 0 ? _ballRect.Right < (paddle.PaddleRect.Left + paddle.PaddleRect.Width / 2) : _ballRect.Left > (paddle.PaddleRect.Right - paddle.PaddleRect.Width / 2);
+				if (behindPaddle) return;
+
+				/* Face Bounce */
+				Debug.WriteLine("side collision");
+
+				if (dir < 0) GameManager.Instance.AiPaddle.BallBounceCallback();
+				else if (dir > 0) paddle.BallBounceCallback();
+				_direction.X *= -1;
+				_position.X += dir < 0 ? paddle.PaddleRect.Right - _ballRect.Left : paddle.PaddleRect.Left - _ballRect.Right;
+				updateRect();
+				BounceSFX.Play();
+			}
+
 		}
 	}
 
