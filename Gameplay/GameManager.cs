@@ -77,6 +77,21 @@ class GameManager
 		SetSFX.Play();
 	}
 
+	public Vector2 GetRandomVel()
+	{
+		Vector2 randomVel = new Vector2();
+
+		int randomVelX = new Random().Next(-1, 2);
+		while (randomVelX == 0) randomVelX = new Random().Next(-1, 2);
+		randomVel.X = randomVelX;
+		int randomVelY = new Random().Next(-1, 2);
+		while (randomVelY == 0) randomVelY = new Random().Next(-1, 2);
+		randomVel.Y = randomVelY;
+		randomVel.Normalize();
+
+		return randomVel;
+	}
+
 	public void UpdateTimer(double deltaTime, Ball ball)
 	{
 		if (!_timer) return;

@@ -42,9 +42,12 @@ class Ball
 
 		_speed = speed;
 
+		/*
 		_direction = new Vector2(1, 0);
 		_direction.Normalize();
-		_direction = _direction.RotateDegrees(45);
+		*/
+		_direction = GameManager.Instance.GetRandomVel();
+		//_direction = _direction.RotateDegrees(45);
 
 		_timeToWait = .15f;
 		_currentTimeToWait = 0;
